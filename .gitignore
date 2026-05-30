@@ -1,0 +1,24 @@
+# Variables de entorno
+.env
+*.env.local
+
+# Dependencias (si se agregan luego)
+/vendor/
+/node_modules/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+/logs/
+
+# Caché PHP
+*.cache

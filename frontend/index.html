@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealState - Evaluador de Proyectos Inmobiliarios</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">RealState<span>MVP</span></h1>
+            <nav class="nav" id="mainNav">
+                <a href="#" id="navProjects" class="nav-link hidden">Proyectos</a>
+                <a href="#" id="navLogout"   class="nav-link hidden">Cerrar sesión</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main container">
+
+        <!-- Vista: Auth -->
+        <section id="viewAuth" class="view card">
+            <h2>Iniciar sesión</h2>
+            <form id="formLogin">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required placeholder="tu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña</label>
+                    <input type="password" id="loginPassword" required placeholder="Mínimo 8 caracteres">
+                </div>
+                <button type="submit" class="btn btn-primary">Entrar</button>
+                <p class="form-footer">
+                    ¿No tenés cuenta? <a href="#" id="goRegister">Registrate</a>
+                </p>
+            </form>
+
+            <form id="formRegister" class="hidden">
+                <div class="form-group">
+                    <label for="regName">Nombre</label>
+                    <input type="text" id="regName" required placeholder="Tu nombre">
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" required placeholder="tu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Contraseña</label>
+                    <input type="password" id="regPassword" required placeholder="Mínimo 8 caracteres">
+                </div>
+                <button type="submit" class="btn btn-primary">Crear cuenta</button>
+                <p class="form-footer">
+                    ¿Ya tenés cuenta? <a href="#" id="goLogin">Iniciá sesión</a>
+                </p>
+            </form>
+        </section>
+
+        <!-- Vista: Lista de proyectos -->
+        <section id="viewProjects" class="view hidden">
+            <div class="view-header">
+                <h2>Mis proyectos</h2>
+                <button class="btn btn-primary" id="btnNewProject">+ Nuevo proyecto</button>
+            </div>
+            <div id="projectList" class="project-grid">
+                <p class="empty-state">No tenés proyectos todavía.</p>
+            </div>
+        </section>
+
+        <!-- Vista: Formulario nuevo proyecto -->
+        <section id="viewNewProject" class="view hidden card">
+            <h2>Nuevo proyecto</h2>
+            <form id="formProject">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nombre del proyecto</label>
+                        <input type="text" name="name" required placeholder="Ej: Torre Palermo">
+                    </div>
+                    <div class="form-group">
+                        <label>Ubicación</label>
+                        <input type="text" name="location" required placeholder="Dirección o zona">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select name="type">
+                            <option value="residencial">Residencial</option>
+                            <option value="comercial">Comercial</option>
+                            <option value="mixto">Mixto</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Superficie total terreno (m²)</label>
+                        <input type="number" name="total_area_m2" required min="1" step="0.01">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Superficie construible (m²)</label>
+                        <input type="number" name="buildable_area_m2" required min="1" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Costo terreno (USD)</label>
+                        <input type="number" name="land_cost" required min="0" step="0.01">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Costo construcción por m² (USD)</label>
+                        <input type="number" name="construction_cost_m2" required min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Precio de venta por m² (USD)</label>
+                        <input type="number" name="sale_price_m2" required min="0" step="0.01">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Otros costos — honorarios, impuestos, comercialización (USD)</label>
+                        <input type="number" name="other_costs" min="0" step="0.01" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Notas</label>
+                        <textarea name="notes" rows="2" placeholder="Observaciones opcionales"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="btnCancelProject">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar y calcular</button>
+                </div>
+            </form>
+        </section>
+
+        <div id="toast" class="toast hidden"></div>
+
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
