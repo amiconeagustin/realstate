@@ -47,16 +47,28 @@ function onLogout() {
 
 // ===== Proyectos =====
 
-async function loadProjects() {
+function goToProjects() {
+    if (!authLoad()) { showView('viewAuth'); return; }
     showView('viewProjects');
+    loadProjects();
+}
+
+async function loadProjects() {
+    const container = document.getElementById('projectList');
+    container.innerHTML = '<p class="empty-state">Cargando…</p>';
     try {
         const projects = await api.projects.list();
         renderProjects(projects);
     } catch (e) {
-        // Sesión expirada en el servidor → limpiar y volver al login
         if (e.message === 'No autenticado' || e.message.startsWith('Error 401')) {
             authClear();
-            onLogout();
+            container.innerHTML = `
+                <div class="empty-state">
+                    Tu sesión expiró.
+                    <a href="#" onclick="onLogout();return false;" style="color:var(--color-primary)">
+                        Iniciá sesión de nuevo
+                    </a>
+                </div>`;
             return;
         }
         toast(e.message, 'error');
@@ -155,22 +167,17 @@ document.getElementById('navLogout').addEventListener('click', e => {
 
 document.getElementById('navProjects').addEventListener('click', e => {
     e.preventDefault();
-    loadProjects();
+    goToProjects();
 });
 
 // ===== Verificación al arrancar la página =====
-(async function init() {
+(function init() {
     const saved = authLoad();
-    if (!saved) return; // no hay sesión guardada → mostrar login (comportamiento por defecto)
+    if (!saved) return; // sin token → login (comportamiento por defecto)
     state.user = saved;
     show('navProjects');
     show('navLogout');
-    try {
-        await loadProjects(); // verifica que la sesión PHP siga viva
-    } catch {
-        authClear();
-        onLogout();
-    }
+    goToProjects(); // muestra proyectos basándose en localStorage, sin llamada extra de validación
 })();
 
 document.getElementById('btnCancelProject')?.addEventListener('click', () => {
