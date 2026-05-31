@@ -1,6 +1,15 @@
 Options -Indexes
 DirectoryIndex index.php
 
+# Cancelar cualquier redirect heredado de directorios padre
+RewriteEngine On
+RewriteBase /
+
+# Si el host es api.amicone.com.ar, servir el archivo tal cual (sin redirect)
+RewriteCond %{HTTP_HOST} ^api\.amicone\.com\.ar$ [NC]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
 # Forzar que Apache procese los .php como PHP
 AddHandler application/x-httpd-php .php
 
