@@ -34,7 +34,7 @@ function onLogin(user) {
     authSave(user);
     show('navProjects');
     show('navLogout');
-    loadProjects();
+    goToProjects();
 }
 
 function onLogout() {
