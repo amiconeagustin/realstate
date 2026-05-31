@@ -1,0 +1,18 @@
+Options -Indexes
+DirectoryIndex index.php
+
+# Forzar que Apache procese los .php como PHP
+AddHandler application/x-httpd-php .php
+
+# CORS global para la API
+<IfModule mod_headers.c>
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header always set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>
+
+# Bloquear acceso a archivos sensibles
+<FilesMatch "(\.env|\.git|schema\.sql)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
