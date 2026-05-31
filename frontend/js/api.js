@@ -1,5 +1,7 @@
 // Capa de comunicación con el backend
-const API_BASE = 'https://api.amicone.com.ar/api';
+const API_BASE = window.location.hostname === 'localhost'
+    ? 'http://localhost/realstate/api'
+    : 'https://api.amicone.com.ar/api';
 
 async function request(path, options = {}) {
     const res = await fetch(`${API_BASE}${path}`, {
