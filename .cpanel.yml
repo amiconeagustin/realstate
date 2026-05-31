@@ -1,0 +1,7 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/apiamic1/public_html/api.amicone.com.ar/
+    - /bin/cp -R api $DEPLOYPATH
+    - /bin/cp -R config $DEPLOYPATH
+    - /bin/cp -R db $DEPLOYPATH
