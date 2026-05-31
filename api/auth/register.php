@@ -42,9 +42,16 @@ if ($stmt->fetch()) {
     exit;
 }
 
-$hash = password_hash($password, PASSWORD_BCRYPT);
-$stmt = $pdo->prepare('INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)');
+$hash  = password_hash($password, PASSWORD_BCRYPT);
+$stmt  = $pdo->prepare('INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)');
 $stmt->execute([$name, $email, $hash]);
+$newId = (int) $pdo->lastInsertId();
+
+session_start();
+$_SESSION['user_id'] = $newId;
 
 http_response_code(201);
-echo json_encode(['success' => true, 'message' => 'Usuario registrado correctamente']);
+echo json_encode([
+    'success' => true,
+    'user'    => ['id' => $newId, 'name' => $name, 'email' => $email],
+]);

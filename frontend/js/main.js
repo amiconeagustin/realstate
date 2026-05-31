@@ -1,6 +1,15 @@
 // Estado mínimo de la SPA
 const state = { user: null };
 
+// ===== Persistencia de sesión en localStorage =====
+
+function authSave(user)  { localStorage.setItem('rs_user', JSON.stringify(user)); }
+function authClear()     { localStorage.removeItem('rs_user'); }
+function authLoad()      {
+    try { return JSON.parse(localStorage.getItem('rs_user')); }
+    catch { return null; }
+}
+
 // ===== Utilidades UI =====
 
 function show(id)  { document.getElementById(id)?.classList.remove('hidden'); }
@@ -22,6 +31,7 @@ function showView(viewId) {
 
 function onLogin(user) {
     state.user = user;
+    authSave(user);
     show('navProjects');
     show('navLogout');
     loadProjects();
@@ -29,6 +39,7 @@ function onLogin(user) {
 
 function onLogout() {
     state.user = null;
+    authClear();
     hide('navProjects');
     hide('navLogout');
     showView('viewAuth');
@@ -42,6 +53,12 @@ async function loadProjects() {
         const projects = await api.projects.list();
         renderProjects(projects);
     } catch (e) {
+        // Sesión expirada en el servidor → limpiar y volver al login
+        if (e.message === 'No autenticado' || e.message.startsWith('Error 401')) {
+            authClear();
+            onLogout();
+            return;
+        }
         toast(e.message, 'error');
     }
 }
@@ -120,14 +137,12 @@ document.getElementById('formLogin').addEventListener('submit', async e => {
 document.getElementById('formRegister').addEventListener('submit', async e => {
     e.preventDefault();
     try {
-        await api.auth.register(
+        const { user } = await api.auth.register(
             document.getElementById('regName').value,
             document.getElementById('regEmail').value,
             document.getElementById('regPassword').value
         );
-        toast('Cuenta creada. Iniciá sesión.');
-        hide('formRegister');
-        show('formLogin');
+        onLogin(user); // sesión creada en el servidor → ir directo a proyectos
     } catch (err) {
         toast(err.message, 'error');
     }
@@ -142,6 +157,21 @@ document.getElementById('navProjects').addEventListener('click', e => {
     e.preventDefault();
     loadProjects();
 });
+
+// ===== Verificación al arrancar la página =====
+(async function init() {
+    const saved = authLoad();
+    if (!saved) return; // no hay sesión guardada → mostrar login (comportamiento por defecto)
+    state.user = saved;
+    show('navProjects');
+    show('navLogout');
+    try {
+        await loadProjects(); // verifica que la sesión PHP siga viva
+    } catch {
+        authClear();
+        onLogout();
+    }
+})();
 
 document.getElementById('btnCancelProject')?.addEventListener('click', () => {
     showView('viewProjects');
