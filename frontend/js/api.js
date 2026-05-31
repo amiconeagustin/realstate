@@ -1,10 +1,10 @@
 // Capa de comunicación con el backend
-const API_BASE = '/realstate/api';
+const API_BASE = 'https://api.amicone.com.ar/api';
 
 async function request(path, options = {}) {
     const res = await fetch(`${API_BASE}${path}`, {
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'same-origin',
+        credentials: 'include',
         ...options,
     });
 
