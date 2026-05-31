@@ -1,5 +1,5 @@
 // Capa de comunicación con el backend
-const API_BASE = '/realstate/backend/api';
+const API_BASE = '/realstate/api';
 
 async function request(path, options = {}) {
     const res = await fetch(`${API_BASE}${path}`, {
@@ -22,8 +22,11 @@ const api = {
         register: (name, email, password) => request('/auth/register.php', { method: 'POST', body: JSON.stringify({ name, email, password }) }),
     },
     projects: {
-        list:   ()     => request('/projects/index.php'),
-        create: (data) => request('/projects/index.php', { method: 'POST', body: JSON.stringify(data) }),
+        list:      ()          => request('/projects/index.php'),
+        create:    (data)      => request('/projects/index.php',        { method: 'POST', body: JSON.stringify(data) }),
+        calculate: (data)      => request('/projects/calculate.php',    { method: 'POST', body: JSON.stringify(data) }),
+        get:       (id)        => request(`/projects/get.php?id=${id}`),
+        update:    (id, data)  => request(`/projects/get.php?id=${id}`, { method: 'PUT',  body: JSON.stringify(data) }),
     },
     comparables: {
         list:   (projectId)        => request(`/comparables/index.php?project_id=${projectId}`),

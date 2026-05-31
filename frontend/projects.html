@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viabilidad de proyecto — RealState</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/projects.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <a href="index.html" class="logo">RealState<span>MVP</span></a>
+        <nav class="nav">
+            <a href="index.html" class="nav-link">← Mis proyectos</a>
+        </nav>
+    </div>
+</header>
+
+<main class="main container">
+    <div class="calc-layout">
+
+        <!-- ===== COLUMNA IZQUIERDA: Formulario ===== -->
+        <aside class="calc-form-col">
+            <form id="formCalc" novalidate>
+
+                <section class="form-section">
+                    <h3 class="section-title">Datos del lote</h3>
+                    <div class="form-group">
+                        <label for="lot_address">Dirección del lote</label>
+                        <input type="text" id="lot_address" name="lot_address"
+                               placeholder="Ej: Av. Corrientes 1234, CABA" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="lot_m2">Superficie del lote (m²)</label>
+                            <input type="number" id="lot_m2" name="lot_m2"
+                                   min="1" step="0.01" placeholder="500" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="buildable_m2">Superficie construible (m²)</label>
+                            <input type="number" id="buildable_m2" name="buildable_m2"
+                                   min="1" step="0.01" placeholder="1200" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="project_type">Tipo de proyecto</label>
+                        <select id="project_type" name="project_type">
+                            <option value="residencial">Residencial</option>
+                            <option value="comercial">Comercial</option>
+                            <option value="mixto">Mixto</option>
+                        </select>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <h3 class="section-title">Financiero</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="land_price">Precio del terreno (USD)</label>
+                            <input type="number" id="land_price" name="land_price"
+                                   min="0" step="0.01" placeholder="150000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sale_price_m2">Precio venta promedio en la zona (USD/m²)</label>
+                            <input type="number" id="sale_price_m2" name="sale_price_m2"
+                                   min="0" step="0.01" placeholder="2500" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="construction_cost_m2">Costo de construcción (USD/m²)</label>
+                        <input type="number" id="construction_cost_m2" name="construction_cost_m2"
+                               min="0" step="0.01" placeholder="800" required>
+                    </div>
+                </section>
+
+                <!-- Parámetros precargados (colapsable) -->
+                <section class="form-section">
+                    <button type="button" class="params-toggle" id="toggleParams">
+                        <span>Parámetros avanzados</span>
+                        <span class="toggle-icon">▸</span>
+                    </button>
+                    <div id="paramsPanel" class="params-panel hidden">
+                        <p class="params-hint">Valores predeterminados según mercado. Podés editarlos.</p>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fee_percent">Honorarios profesionales (%)</label>
+                                <input type="number" id="fee_percent" name="fee_percent"
+                                       min="0" max="100" step="0.1" value="8">
+                            </div>
+                            <div class="form-group">
+                                <label for="operating_percent">Gastos operativos (% s/ingresos)</label>
+                                <input type="number" id="operating_percent" name="operating_percent"
+                                       min="0" max="100" step="0.1" value="3">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="commercialization_percent">Comercialización (% s/ingresos)</label>
+                                <input type="number" id="commercialization_percent" name="commercialization_percent"
+                                       min="0" max="100" step="0.1" value="3">
+                            </div>
+                            <div class="form-group">
+                                <label for="notarial_percent">Gastos notariales (% s/terreno)</label>
+                                <input type="number" id="notarial_percent" name="notarial_percent"
+                                       min="0" max="100" step="0.1" value="2">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="tax_percent">Impuestos (% s/ingresos)</label>
+                                <input type="number" id="tax_percent" name="tax_percent"
+                                       min="0" max="100" step="0.1" value="1.5">
+                            </div>
+                            <div class="form-group">
+                                <label for="discount_rate">Tasa de descuento anual (%)</label>
+                                <input type="number" id="discount_rate" name="discount_rate"
+                                       min="0" max="200" step="0.1" value="15">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="construction_months">Meses de construcción</label>
+                                <input type="number" id="construction_months" name="construction_months"
+                                       min="1" max="60" step="1" value="18">
+                            </div>
+                            <div class="form-group">
+                                <label for="sales_start_month">Mes inicio de ventas</label>
+                                <input type="number" id="sales_start_month" name="sales_start_month"
+                                       min="1" max="60" step="1" value="12">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="project_months">Duración total (meses)</label>
+                                <input type="number" id="project_months" name="project_months"
+                                       min="1" max="120" step="1" value="24">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="form-actions" style="margin-top:1.5rem">
+                    <button type="submit" class="btn btn-primary btn-lg" id="btnCalc">
+                        Calcular viabilidad
+                    </button>
+                </div>
+
+            </form>
+        </aside>
+
+        <!-- ===== COLUMNA DERECHA: Resultados ===== -->
+        <section id="results" class="calc-results-col hidden">
+
+            <div class="results-header">
+                <h2 id="resultsTitle">Resultados</h2>
+                <button id="btnSave" class="btn btn-primary hidden">Guardar proyecto</button>
+            </div>
+
+            <!-- Tabs de escenarios -->
+            <div class="scenario-tabs">
+                <button class="tab-btn active" data-tab="efectivo">Efectivo puro</button>
+                <button class="tab-btn"         data-tab="mixta">Mixta 70/30</button>
+                <button class="tab-btn"         data-tab="canje">Canje puro</button>
+            </div>
+
+            <!-- Tarjeta efectivo -->
+            <div id="tab-efectivo" class="scenario-card" data-scenario="efectivo">
+                <div class="viability-banner" id="banner-efectivo"></div>
+                <div class="kpi-grid">
+                    <div class="kpi">
+                        <div class="kpi-label">VAN</div>
+                        <div class="kpi-value" id="van-efectivo">—</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="kpi-label">TIR anual</div>
+                        <div class="kpi-value" id="tir-efectivo">—</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="kpi-label">Margen</div>
+                        <div class="kpi-value" id="margen-efectivo">—</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="kpi-label">Utilidad</div>
+                        <div class="kpi-value" id="utilidad-efectivo">—</div>
+                    </div>
+                </div>
+                <div class="breakdown" id="breakdown-efectivo"></div>
+            </div>
+
+            <!-- Tarjeta mixta -->
+            <div id="tab-mixta" class="scenario-card hidden" data-scenario="mixta">
+                <div class="viability-banner" id="banner-mixta"></div>
+                <div class="kpi-grid">
+                    <div class="kpi">
+                        <div class="kpi-label">VAN</div>
+                        <div class="kpi-value" id="van-mixta">—</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="kpi-label">TIR anual</div>
+                        <div class="kpi-value" id="tir-mixta">—</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="kpi-label">Margen</div>
+                        <div class="kpi-value" id="margen-mixta">—</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="kpi-label">Utilidad</div>
+                        <div class="kpi-value" id="utilidad-mixta">—</div>
+                    </div>
+                </div>
+                <div class="breakdown" id="breakdown-mixta"></div>
+            </div>
+
+            <!-- Tarjeta canje -->
+            <div id="tab-canje" class="scenario-card hidden" data-scenario="canje">
+                <div class="viability-banner" id="banner-canje"></div>
+                <div class="kpi-grid">
+                    <div class="kpi">
+                        <div class="kpi-label">VAN</div>
+                        <div class="kpi-value" id="van-canje">—</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="kpi-label">TIR anual</div>
+                        <div class="kpi-value" id="tir-canje">—</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="kpi-label">Margen</div>
+                        <div class="kpi-value" id="margen-canje">—</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="kpi-label">Utilidad</div>
+                        <div class="kpi-value" id="utilidad-canje">—</div>
+                    </div>
+                </div>
+                <div class="breakdown" id="breakdown-canje"></div>
+            </div>
+
+        </section>
+
+    </div><!-- /.calc-layout -->
+
+    <div id="toast" class="toast hidden"></div>
+</main>
+
+<script src="js/api.js"></script>
+<script src="js/projects.js"></script>
+</body>
+</html>

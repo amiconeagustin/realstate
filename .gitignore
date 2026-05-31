@@ -1,6 +1,7 @@
-# Variables de entorno
+# Variables de entorno y credenciales
 .env
 *.env.local
+SSH github.txt
 
 # Dependencias (si se agregan luego)
 /vendor/

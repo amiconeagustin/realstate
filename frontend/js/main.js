@@ -54,17 +54,19 @@ function renderProjects(projects) {
     }
 
     container.innerHTML = projects.map(p => {
-        const roi     = p.roi_percent != null ? parseFloat(p.roi_percent).toFixed(1) + '%' : '—';
-        const profit  = p.gross_profit != null
+        const roi      = p.roi_percent != null ? parseFloat(p.roi_percent).toFixed(1) + '%' : '—';
+        const profit   = p.gross_profit != null
             ? 'USD ' + parseInt(p.gross_profit).toLocaleString('es-AR')
             : '—';
         const roiClass = p.roi_percent >= 0 ? 'positive' : 'negative';
 
         return `
-        <div class="project-card">
+        <div class="project-card" data-id="${p.id}" role="button" tabindex="0"
+             onclick="window.location.href='project-detail.html?id=${p.id}'"
+             onkeydown="if(event.key==='Enter')window.location.href='project-detail.html?id=${p.id}'">
             <div style="display:flex;justify-content:space-between;align-items:flex-start">
                 <h3>${escHtml(p.name)}</h3>
-                <span class="badge badge-${p.status}">${p.status}</span>
+                <span class="badge badge-${p.status}">${escHtml(p.status)}</span>
             </div>
             <p class="location">${escHtml(p.location)}</p>
             <div class="metrics">
@@ -77,6 +79,7 @@ function renderProjects(projects) {
                     <div class="value">${profit}</div>
                 </div>
             </div>
+            <p class="card-hint">Clic para ver detalles →</p>
         </div>`;
     }).join('');
 }
@@ -140,15 +143,11 @@ document.getElementById('navProjects').addEventListener('click', e => {
     loadProjects();
 });
 
-document.getElementById('btnNewProject').addEventListener('click', () => {
-    showView('viewNewProject');
-});
-
-document.getElementById('btnCancelProject').addEventListener('click', () => {
+document.getElementById('btnCancelProject')?.addEventListener('click', () => {
     showView('viewProjects');
 });
 
-document.getElementById('formProject').addEventListener('submit', async e => {
+document.getElementById('formProject')?.addEventListener('submit', async e => {
     e.preventDefault();
     const formData = Object.fromEntries(new FormData(e.target));
     try {

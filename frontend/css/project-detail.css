@@ -1,0 +1,99 @@
+/* ===== Cabecera del proyecto ===== */
+.project-detail-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+}
+.project-detail-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.project-detail-location {
+    font-size: .9rem;
+    color: var(--color-muted);
+    margin-top: .25rem;
+}
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    flex-shrink: 0;
+}
+
+/* ===== Selector de estado ===== */
+.status-select {
+    width: auto;
+    font-size: .85rem;
+    font-weight: 600;
+    padding: .35rem .75rem;
+    border-radius: 99px;
+    cursor: pointer;
+}
+
+/* ===== Estado de carga ===== */
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 4rem 0;
+    color: var(--color-muted);
+}
+.spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--color-border);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===== Acciones del formulario ===== */
+.detail-actions {
+    display: flex;
+    gap: .75rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+.detail-actions .btn { flex: 1; justify-content: center; }
+
+/* ===== Métricas guardadas ===== */
+.saved-metrics {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+}
+.saved-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .75rem;
+}
+@media (max-width: 600px) { .saved-kpi-grid { grid-template-columns: 1fr 1fr; } }
+
+.saved-kpi {
+    background: var(--color-bg);
+    border-radius: 6px;
+    padding: .6rem .75rem;
+}
+.saved-kpi .kpi-label { font-size: .72rem; color: var(--color-muted); margin-bottom: .2rem; }
+.saved-kpi .kpi-value { font-size: .95rem; font-weight: 700; }
+
+/* ===== Hint en card de proyecto ===== */
+.project-card .card-hint {
+    font-size: .75rem;
+    color: var(--color-muted);
+    text-align: right;
+    margin-top: .25rem;
+    opacity: 0;
+    transition: opacity .15s;
+}
+.project-card:hover .card-hint { opacity: 1; }

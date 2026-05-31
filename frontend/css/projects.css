@@ -1,0 +1,177 @@
+/* ===== Layout calculadora ===== */
+.calc-layout {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+@media (max-width: 900px) {
+    .calc-layout { grid-template-columns: 1fr; }
+}
+
+/* ===== Secciones del formulario ===== */
+.form-section {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+}
+.section-title {
+    font-size: .85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--color-muted);
+    margin-bottom: 1rem;
+}
+
+/* ===== Parámetros avanzados ===== */
+.params-toggle {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: none;
+    font-size: .9rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    cursor: pointer;
+    padding: 0;
+}
+.params-toggle:hover { color: var(--color-primary-h); }
+.toggle-icon { font-size: .8rem; transition: transform .2s; }
+.params-hint {
+    font-size: .8rem;
+    color: var(--color-muted);
+    margin: .5rem 0 .75rem;
+}
+.params-panel { margin-top: 1rem; }
+
+.btn-lg { padding: .65rem 1.5rem; font-size: 1rem; width: 100%; justify-content: center; }
+
+/* ===== Resultados ===== */
+.calc-results-col { min-width: 0; }
+
+.results-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.results-header h2 { font-size: 1.2rem; }
+
+/* ===== Tabs ===== */
+.scenario-tabs {
+    display: flex;
+    gap: .5rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: .5rem;
+}
+.tab-btn {
+    background: none;
+    border: none;
+    font-size: .9rem;
+    font-weight: 500;
+    color: var(--color-muted);
+    cursor: pointer;
+    padding: .4rem .8rem;
+    border-radius: var(--radius) var(--radius) 0 0;
+    transition: color .15s, background .15s;
+}
+.tab-btn:hover  { color: var(--color-primary); }
+.tab-btn.active {
+    color: var(--color-primary);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-bottom: 2px solid var(--color-surface);
+    margin-bottom: -2px;
+}
+
+/* ===== Tarjeta de escenario ===== */
+.scenario-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+/* ===== Banner de viabilidad ===== */
+.viability-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .5rem;
+    padding: .85rem 1.25rem;
+    border-bottom: 2px solid;
+    font-size: .95rem;
+    font-weight: 600;
+}
+.viab-desc {
+    font-size: .82rem;
+    font-weight: 400;
+    opacity: .85;
+}
+
+/* ===== KPIs ===== */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--color-border);
+}
+@media (max-width: 600px) { .kpi-grid { grid-template-columns: 1fr 1fr; } }
+
+.kpi {
+    padding: 1rem;
+    text-align: center;
+    border-right: 1px solid var(--color-border);
+}
+.kpi:last-child { border-right: none; }
+.kpi-label { font-size: .75rem; color: var(--color-muted); margin-bottom: .25rem; }
+.kpi-value { font-size: 1.25rem; font-weight: 700; }
+
+/* ===== Desglose ===== */
+.breakdown { padding: 1rem 1.25rem; }
+
+.breakdown-details summary {
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    cursor: pointer;
+    list-style: none;
+    margin-bottom: .75rem;
+}
+.breakdown-details summary::-webkit-details-marker { display: none; }
+.breakdown-details summary::before { content: '▸ '; }
+.breakdown-details[open] summary::before { content: '▾ '; }
+
+.breakdown-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .875rem;
+}
+.breakdown-table th {
+    text-align: left;
+    padding: .35rem .5rem;
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    border-bottom: 2px solid var(--color-border);
+}
+.breakdown-table td {
+    padding: .35rem .5rem;
+    border-bottom: 1px solid var(--color-border);
+}
+.breakdown-table td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.breakdown-table .row-total td { font-weight: 700; background: var(--color-bg); }
+
+.cell-cost { color: var(--color-danger); }
+.cell-pos  { color: var(--color-success); }
+.cell-neg  { color: var(--color-danger); }
